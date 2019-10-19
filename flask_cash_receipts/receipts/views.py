@@ -60,11 +60,12 @@ def generate():
                 item_id = value
                 item_name = retail_items_dict[value]["name"]
                 quantity = int(request.form.get(value))
-                if retail_items_dict[value]["custom_attributes"] is not None:
+                if retail_items_dict[value]["custom_attributes"] is not None and retail_items_dict[value]["custom_attributes"] is not "":
+                    current_app.logger.info(retail_items_dict[value]["custom_attributes"])
                     item_name += "({attribute}: {attribute_value})".format(
                         attribute=retail_items_dict[value]["custom_attributes"],
                         attribute_value=request.form.get(
-                            value + retail_items_dict[value]["custom_attributes"]
+                            value + "-" + retail_items_dict[value]["custom_attributes"]
                         ),
                     )
                 price = retail_items_dict[value]["price"]
