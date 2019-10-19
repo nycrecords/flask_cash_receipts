@@ -10,4 +10,6 @@ blueprint = Blueprint("user", __name__, url_prefix="/users", static_folder="../s
 @login_required
 def members():
     """List members."""
+    return redirect(url_for('receipt.generate'))
+
     return render_template("users/members.html")

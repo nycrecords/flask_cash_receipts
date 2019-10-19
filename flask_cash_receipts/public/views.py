@@ -29,6 +29,7 @@ def load_user(user_id):
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     """Home page."""
+    return redirect(url_for('receipt.generate'))
     form = LoginForm(request.form)
     current_app.logger.info("Hello from the home page!")
     # Handle logging in
@@ -47,6 +48,7 @@ def home():
 @login_required
 def logout():
     """Logout."""
+    return redirect(url_for('receipt.generate'))
     logout_user()
     flash("You are logged out.", "info")
     return redirect(url_for("public.home"))
@@ -55,6 +57,7 @@ def logout():
 @blueprint.route("/register/", methods=["GET", "POST"])
 def register():
     """Register new user."""
+    return redirect(url_for('receipt.generate'))
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         User.create(
@@ -73,5 +76,7 @@ def register():
 @blueprint.route("/about/")
 def about():
     """About page."""
+    return redirect(url_for('receipt.generate'))
+
     form = LoginForm(request.form)
     return render_template("public/about.html", form=form)

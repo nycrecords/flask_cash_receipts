@@ -6,10 +6,22 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
+    <style type="text/css">
+        @media print {
+            .btn-print {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
+        <div class="row btn-print">
+            <button type="button" class="btn-print" onclick="javascript:window.print()">Print Receipt</button>
+            <a href="{{ url_for('receipt.generate', event_name='OHNYC') }}"><button type="button" class="btn-print">New
+                    Receipt</button></a>
+        </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="invoice-title">
