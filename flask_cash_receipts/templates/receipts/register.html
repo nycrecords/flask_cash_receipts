@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <form class="form-horizontal" aciton="/retail/generate" method="POST">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Generate Receipt</legend>
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            <!-- Text input-->
+            <div class="form-group row">
+                <label class="col-md-4 control-label" for="username">Username</label>
+                <div class="col-md-4">
+                    <input id="username" name="username" type="text" placeholder="username"
+                        class="form-control input-md" required="">
+                    <span class="help-block">Enter your username (the part of your email before the @)</span>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group row">
+                <label class="col-md-4 control-label" for="pin">Pin</label>
+                <div class="col-md-4">
+                    <input id="pin" name="pin" type="text" placeholder="1234" class="form-control input-md" required="">
+                    <span class="help-block">Enter your four digit pin. If you are a NYC Employee, it is the last 4
+                        digits of your ERN. If you not a city employee, please enter the month and day of your birthday
+                        using 4 digits (e.g. 0407 for April 7th)</span>
+                </div>
+            </div>
+
+            {% for item in items %}
+            <div class="input-group row">
+                <div class="col-md-4">
+                    <label for="{{item.id}}">{{item.name}}</label>
+                </div>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger btn-number" data-type="minus"
+                        data-field="{{item.id}}">
+                        -
+                    </button>
+                </span>
+                <input type="text" name="{{item.id}}" class="form-control input-number" value="0" min="0"
+                    max="1000">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-success btn-number" data-type="plus"
+                        data-field="{{item.id}}">
+                        +
+                    </button>
+                </span>
+            </div>
+
+            {% if item.custom_attributes %}
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="{{item.id}}-{{item.custom_attributes}}">{{item.name}} - {{item.custom_attributes}}</label>
+                </div>
+                <div class="col-md-4 col-md-offset-2">
+                    <input type="text" name="{{item.id}}-{{item.custom_attributes}}" />
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <button type="submit">Generate Receipt</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
